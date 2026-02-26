@@ -6,6 +6,7 @@ const state = {
   totalAi: 0,
   totalRaw: 0,
   totalAllMode: 0,
+  followOpmlItems: [],
   allDedup: true,
   siteFilter: "",
   query: "",
@@ -27,6 +28,8 @@ const modeHintEl = document.getElementById("modeHint");
 const allDedupeWrapEl = document.getElementById("allDedupeWrap");
 const allDedupeToggleEl = document.getElementById("allDedupeToggle");
 const allDedupeLabelEl = document.getElementById("allDedupeLabel");
+const followOpmlListEl = document.getElementById("followOpmlList");
+const followOpmlCountEl = document.getElementById("followOpmlCount");
 
 function fmtNumber(n) {
   return new Intl.NumberFormat("zh-CN").format(n || 0);
@@ -280,6 +283,23 @@ function renderList() {
   renderGroupedBySiteAndSource(filtered);
 }
 
+function renderFollowOpml() {
+  if (!followOpmlListEl || !followOpmlCountEl) return;
+  const items = state.followOpmlItems || [];
+  followOpmlCountEl.textContent = `${fmtNumber(items.length)} 条`;
+  followOpmlListEl.innerHTML = "";
+  if (!items.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "暂无 follow.opml 数据。";
+    followOpmlListEl.appendChild(empty);
+    return;
+  }
+  items.forEach((item) => {
+    followOpmlListEl.appendChild(renderItemNode(item));
+  });
+}
+
 async function loadNewsData() {
   const res = await fetch(`./data/latest-24h.json?t=${Date.now()}`);
   if (!res.ok) throw new Error(`加载 latest-24h.json 失败: ${res.status}`);
@@ -300,9 +320,11 @@ async function init() {
     state.totalAi = payload.total_items || state.itemsAi.length;
     state.totalRaw = payload.total_items_raw || state.itemsAllRaw.length;
     state.totalAllMode = payload.total_items_all_mode || state.itemsAll.length;
+    state.followOpmlItems = payload.follow_opml_items || [];
     state.generatedAt = payload.generated_at;
 
     setStats(payload);
+    renderFollowOpml();
     renderModeSwitch();
     renderSiteFilters();
     renderList();

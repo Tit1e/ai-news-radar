@@ -1860,6 +1860,25 @@ def main() -> int:
             pruned[item_id] = record
     archive = pruned
 
+    # follow.opml dedicated block (not mixed into main news views)
+    follow_opml_items: list[dict[str, Any]] = []
+    for record in archive.values():
+        if str(record.get("site_id") or "") != "opmlrss":
+            continue
+        normalized = dict(record)
+        normalized["title"] = maybe_fix_mojibake(str(normalized.get("title") or ""))
+        normalized["source"] = maybe_fix_mojibake(normalize_source_for_display(
+            str(normalized.get("site_id") or ""),
+            str(normalized.get("source") or ""),
+            str(normalized.get("url") or ""),
+        ))
+        follow_opml_items.append(normalized)
+    follow_opml_items.sort(
+        key=lambda x: parse_iso(x.get("published_at")) or parse_iso(x.get("first_seen_at")) or datetime.min.replace(tzinfo=UTC),
+        reverse=True,
+    )
+    follow_opml_items = follow_opml_items[:20]
+
     # 24h view
     window_start = now - timedelta(hours=args.window_hours)
     latest_items_all: list[dict[str, Any]] = []
@@ -1875,6 +1894,8 @@ def main() -> int:
                 str(normalized.get("source") or ""),
                 str(normalized.get("url") or ""),
             ))
+            if str(normalized.get("site_id") or "") == "opmlrss":
+                continue
             if str(normalized.get("site_id") or "") == "aihubtoday" and is_hubtoday_placeholder_title(
                 str(normalized.get("title") or "")
             ):
@@ -1948,6 +1969,9 @@ def main() -> int:
         "items_ai": latest_items_ai_dedup,
         "items_all_raw": latest_items_all,
         "items_all": latest_items_all_dedup,
+        "follow_opml_limit": 20,
+        "follow_opml_count": len(follow_opml_items),
+        "follow_opml_items": follow_opml_items,
     }
 
     archive_payload = {
