@@ -11,7 +11,10 @@ const state = {
   query: "",
   mode: "ai",
   generatedAt: null,
+  accordionState: {},
 };
+
+const ACCORDION_STORAGE_KEY = "ai-news-radar:accordion-state:v1";
 
 const siteSelectEl = document.getElementById("siteSelect");
 const sitePillsEl = document.getElementById("sitePills");
@@ -28,6 +31,38 @@ const allDedupeToggleEl = document.getElementById("allDedupeToggle");
 const allDedupeLabelEl = document.getElementById("allDedupeLabel");
 const followOpmlListEl = document.getElementById("followOpmlList");
 const followOpmlCountEl = document.getElementById("followOpmlCount");
+
+function readAccordionState() {
+  try {
+    const raw = localStorage.getItem(ACCORDION_STORAGE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch (_) {
+    return {};
+  }
+}
+
+function writeAccordionState() {
+  try {
+    localStorage.setItem(ACCORDION_STORAGE_KEY, JSON.stringify(state.accordionState || {}));
+  } catch (_) {
+    // Ignore storage failures (private mode / quota / disabled storage).
+  }
+}
+
+function makeAccordionId(parts) {
+  return parts.map((x) => encodeURIComponent(String(x || ""))).join("|");
+}
+
+function bindAccordionState(node, id, defaultOpen = false) {
+  const saved = state.accordionState[id];
+  node.open = typeof saved === "boolean" ? saved : defaultOpen;
+  node.addEventListener("toggle", () => {
+    state.accordionState[id] = node.open;
+    writeAccordionState();
+  });
+}
 
 function fmtNumber(n) {
   return new Intl.NumberFormat("zh-CN").format(n || 0);
@@ -160,10 +195,9 @@ function renderItemNode(item) {
   return node;
 }
 
-function buildSourceGroupNode(source, items) {
+function buildSourceGroupNode(source, items, accordionId) {
   const section = document.createElement("details");
   section.className = "source-group accordion";
-  section.open = true;
   section.innerHTML = `
     <summary class="source-group-head accordion-head">
       <div class="accordion-title">
@@ -174,6 +208,7 @@ function buildSourceGroupNode(source, items) {
     </summary>
     <div class="source-group-list"></div>
   `;
+  bindAccordionState(section, accordionId, false);
   const listEl = section.querySelector(".source-group-list");
   items.forEach((item) => listEl.appendChild(renderItemNode(item)));
   return section;
@@ -195,9 +230,11 @@ function groupBySource(items) {
 function renderGroupedBySource(items) {
   const groups = groupBySource(items);
   const frag = document.createDocumentFragment();
+  const ctx = state.siteFilter ? `site:${state.siteFilter}` : "all";
 
   groups.forEach(([source, groupItems]) => {
-    frag.appendChild(buildSourceGroupNode(source, groupItems));
+    const accordionId = makeAccordionId(["source", ctx, source]);
+    frag.appendChild(buildSourceGroupNode(source, groupItems, accordionId));
   });
 
   newsListEl.appendChild(frag);
@@ -222,10 +259,9 @@ function renderGroupedBySiteAndSource(items) {
   });
 
   const frag = document.createDocumentFragment();
-  sites.forEach(([, site]) => {
+  sites.forEach(([siteId, site]) => {
     const siteSection = document.createElement("details");
     siteSection.className = "site-group accordion";
-    siteSection.open = true;
     siteSection.innerHTML = `
       <summary class="site-group-head accordion-head">
         <div class="accordion-title">
@@ -236,11 +272,14 @@ function renderGroupedBySiteAndSource(items) {
       </summary>
       <div class="site-group-list"></div>
     `;
+    const siteAccordionId = makeAccordionId(["site", siteId]);
+    bindAccordionState(siteSection, siteAccordionId, false);
 
     const siteListEl = siteSection.querySelector(".site-group-list");
     const sourceGroups = groupBySource(site.items);
     sourceGroups.forEach(([source, groupItems]) => {
-      siteListEl.appendChild(buildSourceGroupNode(source, groupItems));
+      const sourceAccordionId = makeAccordionId(["source", `site:${siteId}`, source]);
+      siteListEl.appendChild(buildSourceGroupNode(source, groupItems, sourceAccordionId));
     });
     frag.appendChild(siteSection);
   });
@@ -294,6 +333,7 @@ async function loadNewsData() {
 }
 
 async function init() {
+  state.accordionState = readAccordionState();
   const newsResult = await loadNewsData()
     .then((value) => ({ status: "fulfilled", value }))
     .catch((reason) => ({ status: "rejected", reason }));
