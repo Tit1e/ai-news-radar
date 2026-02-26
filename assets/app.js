@@ -2,7 +2,6 @@ const state = {
   itemsAi: [],
   itemsAll: [],
   itemsAllRaw: [],
-  statsAi: [],
   totalAi: 0,
   totalRaw: 0,
   totalAllMode: 0,
@@ -14,7 +13,6 @@ const state = {
   generatedAt: null,
 };
 
-const statsEl = document.getElementById("stats");
 const siteSelectEl = document.getElementById("siteSelect");
 const sitePillsEl = document.getElementById("sitePills");
 const newsListEl = document.getElementById("newsList");
@@ -47,25 +45,6 @@ function fmtTime(iso) {
   }).format(d);
 }
 
-function setStats(payload) {
-  const cards = [
-    ["24h AI", fmtNumber(payload.total_items)],
-    ["24h 全量", fmtNumber(payload.total_items_raw || payload.total_items)],
-    ["全量去重后", fmtNumber(payload.total_items_all_mode || payload.total_items_raw || payload.total_items)],
-    ["站点数", fmtNumber(payload.site_count)],
-    ["来源分组", fmtNumber(payload.source_count)],
-    ["归档总量", fmtNumber(payload.archive_total || 0)]
-  ];
-
-  statsEl.innerHTML = "";
-  cards.forEach(([k, v]) => {
-    const node = document.createElement("div");
-    node.className = "stat";
-    node.innerHTML = `<div class="k">${k}</div><div class="v">${v}</div>`;
-    statsEl.appendChild(node);
-  });
-}
-
 function computeSiteStats(items) {
   const m = new Map();
   items.forEach((item) => {
@@ -80,7 +59,7 @@ function computeSiteStats(items) {
 }
 
 function currentSiteStats() {
-  if (state.mode === "ai") return state.statsAi || [];
+  if (state.mode === "ai") return computeSiteStats(state.itemsAi || []);
   return computeSiteStats(state.allDedup ? (state.itemsAll || []) : (state.itemsAllRaw || []));
 }
 
@@ -316,14 +295,12 @@ async function init() {
     state.itemsAi = payload.items_ai || payload.items || [];
     state.itemsAllRaw = payload.items_all_raw || payload.items_all || payload.items || [];
     state.itemsAll = payload.items_all || payload.items || [];
-    state.statsAi = payload.site_stats || [];
     state.totalAi = payload.total_items || state.itemsAi.length;
     state.totalRaw = payload.total_items_raw || state.itemsAllRaw.length;
     state.totalAllMode = payload.total_items_all_mode || state.itemsAll.length;
     state.followOpmlItems = payload.follow_opml_items || [];
     state.generatedAt = payload.generated_at;
 
-    setStats(payload);
     renderFollowOpml();
     renderModeSwitch();
     renderSiteFilters();
