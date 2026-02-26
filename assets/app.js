@@ -161,13 +161,17 @@ function renderItemNode(item) {
 }
 
 function buildSourceGroupNode(source, items) {
-  const section = document.createElement("section");
-  section.className = "source-group";
+  const section = document.createElement("details");
+  section.className = "source-group accordion";
+  section.open = true;
   section.innerHTML = `
-    <header class="source-group-head">
-      <h3>${source}</h3>
+    <summary class="source-group-head accordion-head">
+      <div class="accordion-title">
+        <span class="accordion-caret" aria-hidden="true"></span>
+        <h3>${source}</h3>
+      </div>
       <span>${fmtNumber(items.length)} 条</span>
-    </header>
+    </summary>
     <div class="source-group-list"></div>
   `;
   const listEl = section.querySelector(".source-group-list");
@@ -219,13 +223,17 @@ function renderGroupedBySiteAndSource(items) {
 
   const frag = document.createDocumentFragment();
   sites.forEach(([, site]) => {
-    const siteSection = document.createElement("section");
-    siteSection.className = "site-group";
+    const siteSection = document.createElement("details");
+    siteSection.className = "site-group accordion";
+    siteSection.open = true;
     siteSection.innerHTML = `
-      <header class="site-group-head">
-        <h3>${site.siteName}</h3>
+      <summary class="site-group-head accordion-head">
+        <div class="accordion-title">
+          <span class="accordion-caret" aria-hidden="true"></span>
+          <h3>${site.siteName}</h3>
+        </div>
         <span>${fmtNumber(site.items.length)} 条</span>
-      </header>
+      </summary>
       <div class="site-group-list"></div>
     `;
 

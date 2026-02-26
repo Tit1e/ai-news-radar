@@ -264,6 +264,36 @@ select {
   display: grid;
 }
 
+.accordion-head {
+  list-style: none;
+  cursor: pointer;
+}
+
+.accordion-head::-webkit-details-marker {
+  display: none;
+}
+
+.accordion-caret {
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid rgba(33, 22, 17, 0.6);
+  border-bottom: 2px solid rgba(33, 22, 17, 0.6);
+  transform: rotate(45deg);
+  transition: transform 140ms ease;
+  margin-right: 10px;
+  flex: 0 0 auto;
+}
+
+.accordion-title {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.accordion[open] > .accordion-head .accordion-caret {
+  transform: rotate(225deg);
+}
+
 .site-group {
   border-top: 1px solid rgba(22, 16, 13, 0.08);
 }
