@@ -1,12 +1,20 @@
 {
+<<<<<<< HEAD
   "generated_at": "2026-02-26T07:27:11.779391Z",
+=======
+  "generated_at": "2026-02-26T07:32:16.123234Z",
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
   "sites": [
     {
       "site_id": "techurls",
       "site_name": "TechURLs",
       "ok": true,
       "item_count": 405,
+<<<<<<< HEAD
       "duration_ms": 6386,
+=======
+      "duration_ms": 421,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
       "error": null
     },
     {
@@ -14,15 +22,24 @@
       "site_name": "Buzzing",
       "ok": true,
       "item_count": 744,
+<<<<<<< HEAD
       "duration_ms": 6491,
+=======
+      "duration_ms": 284,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
       "error": null
     },
     {
       "site_id": "iris",
       "site_name": "Info Flow",
       "ok": true,
+<<<<<<< HEAD
       "item_count": 423,
       "duration_ms": 68716,
+=======
+      "item_count": 438,
+      "duration_ms": 13859,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
       "error": null
     },
     {
@@ -30,23 +47,38 @@
       "site_name": "BestBlogs",
       "ok": true,
       "item_count": 83,
+<<<<<<< HEAD
       "duration_ms": 9052,
+=======
+      "duration_ms": 2927,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
       "error": null
     },
     {
       "site_id": "tophub",
       "site_name": "TopHub",
+<<<<<<< HEAD
       "ok": false,
       "item_count": 0,
       "duration_ms": 39838,
       "error": "HTTPSConnectionPool(host='tophub.today', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')))"
+=======
+      "ok": true,
+      "item_count": 3057,
+      "duration_ms": 1691,
+      "error": null
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
     },
     {
       "site_id": "zeli",
       "site_name": "Zeli",
       "ok": true,
       "item_count": 71,
+<<<<<<< HEAD
       "duration_ms": 6269,
+=======
+      "duration_ms": 427,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
       "error": null
     },
     {
@@ -54,7 +86,11 @@
       "site_name": "AI HubToday",
       "ok": true,
       "item_count": 1,
+<<<<<<< HEAD
       "duration_ms": 5805,
+=======
+      "duration_ms": 238,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
       "error": null
     },
     {
@@ -62,33 +98,56 @@
       "site_name": "AIbase",
       "ok": true,
       "item_count": 20,
+<<<<<<< HEAD
       "duration_ms": 366,
+=======
+      "duration_ms": 1622,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
       "error": null
     },
     {
       "site_id": "aihot",
       "site_name": "AI今日热榜",
+<<<<<<< HEAD
       "ok": true,
       "item_count": 497,
       "duration_ms": 9269,
       "error": null
+=======
+      "ok": false,
+      "item_count": 0,
+      "duration_ms": 279,
+      "error": "403 Client Error: Forbidden for url: https://aihot.today/"
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
     },
     {
       "site_id": "newsnow",
       "site_name": "NewsNow",
       "ok": true,
+<<<<<<< HEAD
       "item_count": 1405,
       "duration_ms": 7001,
+=======
+      "item_count": 1400,
+      "duration_ms": 1517,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
       "error": null
     },
     {
       "site_id": "opmlrss",
       "site_name": "OPML RSS",
       "ok": true,
+<<<<<<< HEAD
       "partial_failures": 4,
       "item_count": 495,
       "duration_ms": 128670,
       "error": "4 feeds failed",
+=======
+      "partial_failures": 6,
+      "item_count": 450,
+      "duration_ms": 12335,
+      "error": "6 feeds failed",
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
       "feed_count": 22,
       "effective_feed_count": 22,
       "ok_feed_count": 18,
@@ -102,9 +161,15 @@
     "tophub"
   ],
   "zero_item_sites": [],
+<<<<<<< HEAD
   "fetched_raw_items": 4144,
   "items_before_topic_filter": 14701,
   "items_in_24h": 1701,
+=======
+  "fetched_raw_items": 6669,
+  "items_before_topic_filter": 14606,
+  "items_in_24h": 1479,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
   "rss_opml": {
     "enabled": true,
     "path": "feeds/follow.opml",
@@ -129,7 +194,11 @@
         "effective_feed_url": "https://diygod.cc/feed",
         "ok": true,
         "item_count": 5,
+<<<<<<< HEAD
         "duration_ms": 6247,
+=======
+        "duration_ms": 362,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": null,
         "skipped": false,
         "skip_reason": null,
@@ -143,7 +212,11 @@
         "effective_feed_url": "https://lillianwho.com/atom.xml",
         "ok": true,
         "item_count": 5,
+<<<<<<< HEAD
         "duration_ms": 6175,
+=======
+        "duration_ms": 232,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": null,
         "skipped": false,
         "skip_reason": null,
@@ -157,7 +230,11 @@
         "effective_feed_url": "https://rsshub.app/youtube/user/%40linksphotograph",
         "ok": false,
         "item_count": 0,
+<<<<<<< HEAD
         "duration_ms": 5683,
+=======
+        "duration_ms": 222,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": "403 Client Error: Forbidden for url: https://rsshub.app/youtube/user/%40linksphotograph",
         "skipped": false,
         "skip_reason": null,
@@ -171,7 +248,11 @@
         "effective_feed_url": "https://memozine.me/atom.xml",
         "ok": true,
         "item_count": 82,
+<<<<<<< HEAD
         "duration_ms": 6902,
+=======
+        "duration_ms": 1062,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": null,
         "skipped": false,
         "skip_reason": null,
@@ -185,7 +266,11 @@
         "effective_feed_url": "https://lutaonan.com/rss.xml",
         "ok": true,
         "item_count": 63,
+<<<<<<< HEAD
         "duration_ms": 7412,
+=======
+        "duration_ms": 537,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": null,
         "skipped": false,
         "skip_reason": null,
@@ -199,7 +284,11 @@
         "effective_feed_url": "https://song.al/feed.xml",
         "ok": true,
         "item_count": 25,
+<<<<<<< HEAD
         "duration_ms": 6439,
+=======
+        "duration_ms": 703,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": null,
         "skipped": false,
         "skip_reason": null,
@@ -213,7 +302,11 @@
         "effective_feed_url": "https://skywt.cn/rss.xml",
         "ok": true,
         "item_count": 22,
+<<<<<<< HEAD
         "duration_ms": 676,
+=======
+        "duration_ms": 1866,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": null,
         "skipped": false,
         "skip_reason": null,
@@ -227,7 +320,11 @@
         "effective_feed_url": "https://rsshub.app/youtube/user/%40testvcn",
         "ok": false,
         "item_count": 0,
+<<<<<<< HEAD
         "duration_ms": 5734,
+=======
+        "duration_ms": 200,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": "403 Client Error: Forbidden for url: https://rsshub.app/youtube/user/%40testvcn",
         "skipped": false,
         "skip_reason": null,
@@ -241,7 +338,11 @@
         "effective_feed_url": "https://evolly.one/atom.xml",
         "ok": true,
         "item_count": 10,
+<<<<<<< HEAD
         "duration_ms": 5944,
+=======
+        "duration_ms": 144,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": null,
         "skipped": false,
         "skip_reason": null,
@@ -269,7 +370,11 @@
         "effective_feed_url": "https://www.pseudoyu.com/zh/index.xml",
         "ok": true,
         "item_count": 144,
+<<<<<<< HEAD
         "duration_ms": 6900,
+=======
+        "duration_ms": 1676,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": null,
         "skipped": false,
         "skip_reason": null,
@@ -283,7 +388,11 @@
         "effective_feed_url": "https://maozjj.com/?feed=rss2",
         "ok": true,
         "item_count": 10,
+<<<<<<< HEAD
         "duration_ms": 7982,
+=======
+        "duration_ms": 721,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": null,
         "skipped": false,
         "skip_reason": null,
@@ -297,7 +406,11 @@
         "effective_feed_url": "https://polebug.github.io/atom.xml",
         "ok": true,
         "item_count": 12,
+<<<<<<< HEAD
         "duration_ms": 1120,
+=======
+        "duration_ms": 64,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": null,
         "skipped": false,
         "skip_reason": null,
@@ -311,7 +424,11 @@
         "effective_feed_url": "https://blog.baoshuo.ren/atom.xml",
         "ok": true,
         "item_count": 15,
+<<<<<<< HEAD
         "duration_ms": 749,
+=======
+        "duration_ms": 907,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": null,
         "skipped": false,
         "skip_reason": null,
@@ -323,10 +440,17 @@
         "feed_title": "张鑫旭-鑫空间-鑫生活",
         "feed_url": "https://www.zhangxinxu.com/wordpress/feed/",
         "effective_feed_url": "https://www.zhangxinxu.com/wordpress/feed/",
+<<<<<<< HEAD
         "ok": false,
         "item_count": 0,
         "duration_ms": 10518,
         "error": "HTTPSConnectionPool(host='www.zhangxinxu.com', port=443): Max retries exceeded with url: /wordpress/feed/ (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')))",
+=======
+        "ok": true,
+        "item_count": 5,
+        "duration_ms": 1613,
+        "error": null,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "skipped": false,
         "skip_reason": null,
         "replaced": false
@@ -339,7 +463,11 @@
         "effective_feed_url": "https://www.skyue.com/feed/",
         "ok": true,
         "item_count": 10,
+<<<<<<< HEAD
         "duration_ms": 759,
+=======
+        "duration_ms": 1007,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": null,
         "skipped": false,
         "skip_reason": null,
@@ -353,8 +481,13 @@
         "effective_feed_url": "https://kinnoukabokudo.com/rss",
         "ok": false,
         "item_count": 0,
+<<<<<<< HEAD
         "duration_ms": 10495,
         "error": "HTTPSConnectionPool(host='kinnoukabokudo.com', port=443): Max retries exceeded with url: /rss (Caused by SSLError(SSLEOFError(8, 'EOF occurred in violation of protocol (_ssl.c:1129)')))",
+=======
+        "duration_ms": 97,
+        "error": "403 Client Error: Forbidden for url: https://kinnoukabokudo.com/rss",
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "skipped": false,
         "skip_reason": null,
         "replaced": false
@@ -365,10 +498,17 @@
         "feed_title": "椒盐豆豉",
         "feed_url": "https://blog.douchi.space/index.xml",
         "effective_feed_url": "https://blog.douchi.space/index.xml",
+<<<<<<< HEAD
         "ok": true,
         "item_count": 10,
         "duration_ms": 6444,
         "error": null,
+=======
+        "ok": false,
+        "item_count": 0,
+        "duration_ms": 85,
+        "error": "403 Client Error: Forbidden for url: https://blog.douchi.space/index.xml",
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "skipped": false,
         "skip_reason": null,
         "replaced": false
@@ -381,7 +521,11 @@
         "effective_feed_url": "https://weekly.tw93.fun/rss.xml",
         "ok": true,
         "item_count": 12,
+<<<<<<< HEAD
         "duration_ms": 6176,
+=======
+        "duration_ms": 274,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": null,
         "skipped": false,
         "skip_reason": null,
@@ -393,10 +537,17 @@
         "feed_title": "积薪 - 文章",
         "feed_url": "https://darmau.co/zh/article/rss.xml",
         "effective_feed_url": "https://darmau.co/zh/article/rss.xml",
+<<<<<<< HEAD
         "ok": true,
         "item_count": 30,
         "duration_ms": 6962,
         "error": null,
+=======
+        "ok": false,
+        "item_count": 0,
+        "duration_ms": 88,
+        "error": "403 Client Error: Forbidden for url: https://darmau.co/zh/article/rss.xml",
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "skipped": false,
         "skip_reason": null,
         "replaced": false
@@ -407,10 +558,17 @@
         "feed_title": "貓魚  –  2Cat.Net",
         "feed_url": "https://2cat.net/feed/",
         "effective_feed_url": "https://2cat.net/feed/",
+<<<<<<< HEAD
         "ok": true,
         "item_count": 10,
         "duration_ms": 6635,
         "error": null,
+=======
+        "ok": false,
+        "item_count": 0,
+        "duration_ms": 147,
+        "error": "403 Client Error: Forbidden for url: https://2cat.net/feed/",
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "skipped": false,
         "skip_reason": null,
         "replaced": false
@@ -423,7 +581,11 @@
         "effective_feed_url": "https://blog.ops-coffee.com/feed.xml",
         "ok": true,
         "item_count": 20,
+<<<<<<< HEAD
         "duration_ms": 6253,
+=======
+        "duration_ms": 136,
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
         "error": null,
         "skipped": false,
         "skip_reason": null,

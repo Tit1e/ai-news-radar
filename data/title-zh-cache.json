@@ -1557,6 +1557,7 @@
   "Q&A with Skild AI CEO Deepak Pathak on building a general-purpose brain for robots, standing out among big tech's robotics efforts, the path to AGI, and more (Alex Heath/Sources)": "Skild AI 首席执行官 Deepak Pathak 的问答，内容涉及为机器人构建通用大脑、在大型科技公司的机器人技术中脱颖而出、通向 AGI 之路等（Alex Heath/Sources）",
   "Tech companies are increasingly turning to GPU-backed debt, a model pioneered by CoreWeave, using SPVs to shift debt off their balance sheets (Michelle Chan/Financial Times)": "科技公司越来越多地转向 GPU 支持的债务，这是 CoreWeave 首创的一种模式，利用 SPV 将债务从资产负债表上转移出去（Michelle Chan/金融时报）",
   "Self-improving software won't produce Skynet": "自我改进的软件不会产生天网",
+<<<<<<< HEAD
   "D4Vinci / Scrapling": "D4Vinci / 刮擦",
   "bytedance / deer-flow": "字节跳动/鹿流",
   "VectifyAI / PageIndex": "VectifyAI / 页面索引",
@@ -1598,4 +1599,7 @@
   "After Spending 8 Billion, AI Still Fails to Retain Young People in County Towns": "斥资80亿人工智能仍未能留住县城年轻人",
   "How Did a Single Deal Create an AI Giant, Earning Him a Net $20 Billion?": "一桩交易如何造就人工智能巨头，净赚200亿美元？",
   "The First Humanoid Robot Company of the Year Has Shut Down": "年度第一家人形机器人公司已关闭"
+=======
+  "An Open Letter to Google regarding Mandatory Developer Registration for Android": "关于 Android 强制开发者注册致 Google 的公开信"
+>>>>>>> 109d5da070feeffa84dabcd51d8ae91a973f59f1
 }
