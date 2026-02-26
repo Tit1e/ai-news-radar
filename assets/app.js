@@ -10,8 +10,6 @@ const state = {
   siteFilter: "",
   query: "",
   mode: "ai",
-  waytoagiMode: "today",
-  waytoagiData: null,
   generatedAt: null,
 };
 
@@ -30,12 +28,6 @@ const allDedupeWrapEl = document.getElementById("allDedupeWrap");
 const allDedupeToggleEl = document.getElementById("allDedupeToggle");
 const allDedupeLabelEl = document.getElementById("allDedupeLabel");
 
-const waytoagiUpdatedAtEl = document.getElementById("waytoagiUpdatedAt");
-const waytoagiMetaEl = document.getElementById("waytoagiMeta");
-const waytoagiListEl = document.getElementById("waytoagiList");
-const waytoagiTodayBtnEl = document.getElementById("waytoagiTodayBtn");
-const waytoagi7dBtnEl = document.getElementById("waytoagi7dBtn");
-
 function fmtNumber(n) {
   return new Intl.NumberFormat("zh-CN").format(n || 0);
 }
@@ -49,16 +41,6 @@ function fmtTime(iso) {
     day: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
-  }).format(d);
-}
-
-function fmtDate(iso) {
-  if (!iso) return "未知日期";
-  const d = new Date(`${iso}T00:00:00`);
-  if (Number.isNaN(d.getTime())) return iso;
-  return new Intl.DateTimeFormat("zh-CN", {
-    month: "2-digit",
-    day: "2-digit",
   }).format(d);
 }
 
@@ -298,76 +280,16 @@ function renderList() {
   renderGroupedBySiteAndSource(filtered);
 }
 
-function waytoagiViews(waytoagi) {
-  const updates7d = Array.isArray(waytoagi?.updates_7d) ? waytoagi.updates_7d : [];
-  const latestDate = waytoagi?.latest_date || (updates7d.length ? updates7d[0].date : null);
-  const updatesToday = Array.isArray(waytoagi?.updates_today) && waytoagi.updates_today.length
-    ? waytoagi.updates_today
-    : (latestDate ? updates7d.filter((u) => u.date === latestDate) : []);
-  return { updates7d, updatesToday, latestDate };
-}
-
-function renderWaytoagi(waytoagi) {
-  const { updates7d, updatesToday, latestDate } = waytoagiViews(waytoagi);
-  if (waytoagiTodayBtnEl) waytoagiTodayBtnEl.classList.toggle("active", state.waytoagiMode === "today");
-  if (waytoagi7dBtnEl) waytoagi7dBtnEl.classList.toggle("active", state.waytoagiMode === "7d");
-  waytoagiUpdatedAtEl.textContent = `更新时间：${fmtTime(waytoagi.generated_at)}`;
-
-  waytoagiMetaEl.innerHTML = `
-    <a href="${waytoagi.root_url || "#"}" target="_blank" rel="noopener noreferrer">主页面</a>
-    <span>·</span>
-    <a href="${waytoagi.history_url || "#"}" target="_blank" rel="noopener noreferrer">历史更新页</a>
-    <span>·</span>
-    <span>当天(${latestDate || "--"})：${fmtNumber(waytoagi.count_today || updatesToday.length)} 条</span>
-    <span>·</span>
-    <span>近 7 日：${fmtNumber(waytoagi.count_7d || updates7d.length)} 条</span>
-  `;
-
-  waytoagiListEl.innerHTML = "";
-  if (waytoagi.has_error) {
-    const div = document.createElement("div");
-    div.className = "waytoagi-error";
-    div.textContent = waytoagi.error || "WaytoAGI 数据加载失败";
-    waytoagiListEl.appendChild(div);
-    return;
-  }
-
-  const updates = state.waytoagiMode === "today" ? updatesToday : updates7d;
-  if (!updates.length) {
-    const div = document.createElement("div");
-    div.className = "waytoagi-empty";
-    div.textContent = state.waytoagiMode === "today"
-      ? "当天没有更新，可切换到近7日查看。"
-      : (waytoagi.warning || "近 7 日没有更新");
-    waytoagiListEl.appendChild(div);
-    return;
-  }
-
-  updates.forEach((u) => {
-    const row = document.createElement("a");
-    row.className = "waytoagi-item";
-    row.href = u.url || "#";
-    row.target = "_blank";
-    row.rel = "noopener noreferrer";
-    row.innerHTML = `<span class="d">${fmtDate(u.date)}</span><span class="t">${u.title}</span>`;
-    waytoagiListEl.appendChild(row);
-  });
-}
-
 async function loadNewsData() {
   const res = await fetch(`./data/latest-24h.json?t=${Date.now()}`);
   if (!res.ok) throw new Error(`加载 latest-24h.json 失败: ${res.status}`);
   return res.json();
 }
 
-async function loadWaytoagiData() {
-  const res = await fetch(`./data/waytoagi-7d.json?t=${Date.now()}`);
-  if (!res.ok) throw new Error(`加载 waytoagi-7d.json 失败: ${res.status}`);
-  return res.json();
-}
-
 async function init() {
-  const [newsResult, waytoagiResult] = await Promise.allSettled([loadNewsData(), loadWaytoagiData()]);
+  const newsResult = await loadNewsData()
+    .then((value) => ({ status: "fulfilled", value }))
+    .catch((reason) => ({ status: "rejected", reason }));
 
   if (newsResult.status === "fulfilled") {
     const payload = newsResult.value;
@@ -390,13 +312,6 @@ async function init() {
     newsListEl.innerHTML = `<div class="empty">${newsResult.reason.message}</div>`;
   }
 
-  if (waytoagiResult.status === "fulfilled") {
-    state.waytoagiData = waytoagiResult.value;
-    renderWaytoagi(state.waytoagiData);
-  } else {
-    waytoagiUpdatedAtEl.textContent = "加载失败";
-    waytoagiListEl.innerHTML = `<div class="waytoagi-error">${waytoagiResult.reason.message}</div>`;
-  }
 }
 
 searchInputEl.addEventListener("input", (e) => {
@@ -430,20 +345,6 @@ if (allDedupeToggleEl) {
     renderModeSwitch();
     renderSiteFilters();
     renderList();
-  });
-}
-
-if (waytoagiTodayBtnEl) {
-  waytoagiTodayBtnEl.addEventListener("click", () => {
-    state.waytoagiMode = "today";
-    if (state.waytoagiData) renderWaytoagi(state.waytoagiData);
-  });
-}
-
-if (waytoagi7dBtnEl) {
-  waytoagi7dBtnEl.addEventListener("click", () => {
-    state.waytoagiMode = "7d";
-    if (state.waytoagiData) renderWaytoagi(state.waytoagiData);
   });
 }
 

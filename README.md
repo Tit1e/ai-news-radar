@@ -2,7 +2,7 @@
 
 中文 | [English](#english)
 
-高质量 AI/科技新闻聚合项目，支持静态网页展示、24h 增量更新、WaytoAGI 更新日志、OPML RSS 批量接入、失败源替换与告警。
+高质量 AI/科技新闻聚合项目，支持静态网页展示、24h 增量更新、OPML RSS 批量接入、失败源替换与告警。
 
 说明：本仓库已适配公开发布，**不会包含作者私有 RSS 订阅文件**。
 
@@ -27,7 +27,6 @@
 - AI 模式默认去重
 - 站点与分区聚合展示
 - 中英双语标题显示
-- WaytoAGI：`当天` / `近7日` 切换
 - RSS 失败源自动处理：
   - 能替换官方源则自动替换
   - 无官方 RSS 的源自动跳过，避免浪费抓取时间
@@ -39,7 +38,6 @@
 - `data/latest-24h.json`
 - `data/archive.json`
 - `data/source-status.json`
-- `data/waytoagi-7d.json`
 - `data/title-zh-cache.json`
 
 ### 4. 快速开始
@@ -89,7 +87,7 @@ python -m http.server 8080
 
 ## English
 
-Production-grade AI/tech news aggregator with a static web UI, 24h updates, WaytoAGI timeline, and OPML RSS ingestion.
+Production-grade AI/tech news aggregator with a static web UI, 24h updates, and OPML RSS ingestion.
 
 This repo is safe for public release and does **not** include the maintainer's private RSS subscription file.
 
@@ -111,7 +109,6 @@ You only need to run one command, or let GitHub Actions run it on schedule.
 - Dedup toggle in All mode, dedup-by-default in AI mode
 - Site + section grouping
 - Bilingual title rendering
-- WaytoAGI toggle (`Today` / `Last 7 Days`)
 - RSS resilience:
   - Auto-replace failed feeds with official sources when available
   - Auto-skip unsupported source types (to save crawl time)
@@ -122,7 +119,6 @@ You only need to run one command, or let GitHub Actions run it on schedule.
 - `data/latest-24h.json`
 - `data/archive.json`
 - `data/source-status.json`
-- `data/waytoagi-7d.json`
 - `data/title-zh-cache.json`
 
 ### 4. Quick start
