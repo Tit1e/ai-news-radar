@@ -20,7 +20,7 @@
 
 ### 2. 主要能力
 
-- 10 个网页源聚合（TechURLs / Buzzing / Info Flow / BestBlogs / TopHub / Zeli / AI HubToday / AIbase / AI今日热榜 / NewsNow）
+- 8 个网页源聚合（TechURLs / Info Flow / BestBlogs / TopHub / Zeli / AIbase / AI今日热榜 / NewsNow）
 - OPML RSS 批量接入（私有文件 `feeds/follow.opml`，仓库提供模板 `feeds/follow.example.opml`）
 - 24h 双视图：`AI强相关` / `全量`
 - 全量模式去重开关
