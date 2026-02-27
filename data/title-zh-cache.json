@@ -63,5 +63,8 @@
   "BuildKit: Docker's hidden gem that can build almost anything": "BuildKit：Docker 的隐藏宝石，几乎可以构建任何东西",
   "Google API Keys Weren't Secrets. But then Gemini Changed the Rules": "Google API 密钥不是秘密。但后来双子座改变了规则",
   "An Open Letter to Google regarding Mandatory Developer Registration for Android": "关于 Android 强制开发者注册致 Google 的公开信",
-  "Introducing Lyte2D: A comfy little game engine": "Lyte2D 简介：一款舒适的小型游戏引擎"
+  "Introducing Lyte2D: A comfy little game engine": "Lyte2D 简介：一款舒适的小型游戏引擎",
+  "Google Workers Seek 'Red Lines' on Military A.I., Echoing Anthropic": "谷歌员工寻求军事人工智能的“红线”，呼应人类学",
+  "Parakeet.cpp – Parakeet ASR inference in pure C++ with Metal GPU acceleration": "Parakeet.cpp – 采用 Metal GPU 加速的纯 C++ 中的 Parakeet ASR 推理",
+  "Anthropic CEO Says AI Company 'Cannot In Good Conscience Accede' To Pentagon": "Anthropic首席执行官表示人工智能公司“凭良心不能加入”五角大楼"
 }
