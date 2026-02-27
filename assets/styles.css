@@ -26,6 +26,7 @@ body {
   min-height: 100%;
   font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
   color: var(--ink);
+  background-color: #efefea;
   background:
     radial-gradient(circle at 18% 8%, rgba(0, 0, 0, 0.03), transparent 34%),
     radial-gradient(circle at 92% 14%, rgba(0, 0, 0, 0.025), transparent 36%),
@@ -49,6 +50,18 @@ body::before {
       rgba(0, 0, 0, 0.016) 85px
     );
   background-size: 3px 3px, 100% 100%, 100% 100%;
+}
+
+/* Fill iOS bottom safe area to avoid white showing through transparent toolbar. */
+body::after {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: env(safe-area-inset-bottom);
+  background: #efefea;
+  pointer-events: none;
 }
 
 .bg-orb {
