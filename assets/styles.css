@@ -644,9 +644,18 @@ select {
     flex-direction: row;
     gap: 10px;
     overflow-x: auto;
+    overflow-y: hidden;
     border-right: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.18);
     padding: 2px 0 8px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .group-nav::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
   }
 
   .group-nav-item {
