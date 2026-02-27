@@ -1,0 +1,18 @@
+{
+  "name": "我的订阅流",
+  "short_name": "订阅流",
+  "description": "个人 RSS 订阅阅读站点",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#efefea",
+  "theme_color": "#efefea",
+  "icons": [
+    {
+      "src": "/assets/logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
