@@ -1,5 +1,6 @@
 const state = {
   followOpmlItems: [],
+  followOpmlGroups: [],
   momoyuItems: [],
   momoyuParsed: null,
   generatedAt: null,
@@ -69,6 +70,37 @@ function renderSection(listEl, countEl, items, emptyText) {
   });
 }
 
+function renderFollowOpmlGroups() {
+  if (!followOpmlListEl || !followOpmlCountEl) return;
+  const groups = Array.isArray(state.followOpmlGroups) ? state.followOpmlGroups : [];
+  followOpmlListEl.innerHTML = "";
+
+  if (!groups.length) {
+    renderSection(followOpmlListEl, followOpmlCountEl, state.followOpmlItems || [], "暂无 follow.opml 数据。");
+    return;
+  }
+
+  const shownCount = groups.reduce((acc, group) => acc + ((group.items || []).length || 0), 0);
+  followOpmlCountEl.textContent = `${fmtNumber(groups.length)} 个订阅 · ${fmtNumber(shownCount)} 条`;
+
+  groups.forEach((group) => {
+    const wrap = document.createElement("section");
+    wrap.className = "momoyu-section";
+    const feedName = group.source || "未命名订阅";
+    wrap.innerHTML = `
+      <header class="momoyu-section-head">
+        <h3>${feedName}</h3>
+        <span>${fmtNumber(group.shown_count || (group.items || []).length || 0)} 条</span>
+      </header>
+      <div class="momoyu-section-list"></div>
+    `;
+    const list = wrap.querySelector(".momoyu-section-list");
+    const entries = Array.isArray(group.items) ? group.items : [];
+    entries.forEach((item) => list.appendChild(renderItemNode(item)));
+    followOpmlListEl.appendChild(wrap);
+  });
+}
+
 function renderMomoyuParsed() {
   if (!momoyuListEl || !momoyuCountEl) return;
   const parsed = state.momoyuParsed || {};
@@ -126,11 +158,12 @@ async function init() {
   try {
     const payload = await loadNewsData();
     state.followOpmlItems = payload.follow_opml_items || [];
+    state.followOpmlGroups = payload.follow_opml_groups || [];
     state.momoyuItems = payload.momoyu_items || [];
     state.momoyuParsed = payload.momoyu_parsed || null;
     state.generatedAt = payload.generated_at;
 
-    renderSection(followOpmlListEl, followOpmlCountEl, state.followOpmlItems, "暂无 follow.opml 数据。");
+    renderFollowOpmlGroups();
     renderMomoyuParsed();
 
     if (updatedAtEl) {

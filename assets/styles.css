@@ -7,6 +7,13 @@
   --accent: #d94825;
   --accent-2: #0f6f7f;
   --radius: 18px;
+  --card-pad-y: 16px;
+  --card-pad-x: 20px;
+  --meta-size: 12px;
+  --meta-line: 1.35;
+  --title-size: 19px;
+  --title-line: 1.45;
+  --title-sub-size: 13px;
 }
 
 * {
@@ -363,7 +370,7 @@ select {
 }
 
 .news-card {
-  padding: 14px 18px;
+  padding: var(--card-pad-y) var(--card-pad-x);
   border-top: 1px solid rgba(22, 16, 13, 0.08);
   animation: fade-up 300ms ease;
 }
@@ -375,44 +382,52 @@ select {
 .meta-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  column-gap: 10px;
+  row-gap: 6px;
   align-items: center;
-  font-size: 12px;
+  font-size: var(--meta-size);
+  line-height: var(--meta-line);
   color: var(--muted);
 }
 
 .site {
   font-weight: 700;
   color: #453f39;
+  letter-spacing: 0.01em;
 }
 
 .source {
-  padding: 2px 8px;
+  padding: 2px 9px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  font-size: 11px;
+  font-size: calc(var(--meta-size) - 1px);
+  line-height: 1.2;
 }
 
 .time {
   margin-left: auto;
+  white-space: nowrap;
 }
 
 .title {
-  margin-top: 8px;
+  margin-top: 10px;
   display: inline-flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
   color: var(--ink);
   text-decoration: none;
-  font-size: 16px;
-  line-height: 1.4;
+  font-size: var(--title-size);
+  line-height: var(--title-line);
+  font-weight: 600;
+  letter-spacing: 0.005em;
 }
 
 .title-sub {
   color: var(--muted);
-  font-size: 12px;
-  line-height: 1.35;
+  font-size: var(--title-sub-size);
+  line-height: 1.4;
   font-weight: 400;
+  letter-spacing: 0;
 }
 
 .title:hover {
@@ -484,6 +499,14 @@ select {
 }
 
 @media (max-width: 760px) {
+  :root {
+    --card-pad-y: 14px;
+    --card-pad-x: 14px;
+    --meta-size: 11px;
+    --title-size: 17px;
+    --title-sub-size: 12px;
+  }
+
   .shell {
     padding: 18px 12px 36px;
   }

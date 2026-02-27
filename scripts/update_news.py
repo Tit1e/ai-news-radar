@@ -43,6 +43,7 @@ class RawItem:
     title: str
     url: str
     published_at: datetime | None
+    subscription_url: str = ""
 
 
 def utc_now() -> datetime:
@@ -285,6 +286,7 @@ def fetch_rss_feed(
     site_name: str,
     feed_title: str,
     allow_missing_published: bool = False,
+    subscription_url: str = "",
 ) -> tuple[list[RawItem], dict[str, Any]]:
     start = time.perf_counter()
     out: list[RawItem] = []
@@ -324,6 +326,7 @@ def fetch_rss_feed(
                         title=title,
                         url=link,
                         published_at=published,
+                        subscription_url=subscription_url,
                     )
                 )
         else:
@@ -343,6 +346,7 @@ def fetch_rss_feed(
                         title=entry.get("title", ""),
                         url=entry.get("link", ""),
                         published_at=published,
+                        subscription_url=subscription_url,
                     )
                 )
     except Exception as exc:
@@ -451,6 +455,7 @@ def fetch_opml_rss(
             site_id="opmlrss",
             site_name="OPML RSS",
             feed_title=feed["title"],
+            subscription_url=feed_url,
         )
         status["feed_title"] = feed["title"]
         status["effective_feed_url"] = feed_url
@@ -560,6 +565,52 @@ def group_stats(items: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], int]
     return site_stats, source_count
 
 
+def group_follow_opml_items(
+    items: list[dict[str, Any]],
+    per_feed_limit: int = 10,
+) -> list[dict[str, Any]]:
+    grouped: dict[str, dict[str, Any]] = {}
+
+    for item in items:
+        key = str(item.get("subscription_url") or "").strip() or str(item.get("source") or "").strip() or "unknown"
+        if key not in grouped:
+            grouped[key] = {
+                "subscription_url": str(item.get("subscription_url") or "").strip(),
+                "source": str(item.get("source") or "未命名订阅"),
+                "site_name": str(item.get("site_name") or "OPML RSS"),
+                "items": [],
+            }
+        grouped[key]["items"].append(item)
+
+    out: list[dict[str, Any]] = []
+    for group in grouped.values():
+        all_items = sorted(
+            group["items"],
+            key=lambda x: event_time(x) or datetime.min.replace(tzinfo=UTC),
+            reverse=True,
+        )
+        shown = all_items[:per_feed_limit]
+        out.append(
+            {
+                "subscription_url": group["subscription_url"],
+                "source": group["source"],
+                "site_name": group["site_name"],
+                "total_count": len(all_items),
+                "shown_count": len(shown),
+                "items": shown,
+            }
+        )
+
+    out.sort(
+        key=lambda group: (
+            event_time(group["items"][0]) if group["items"] else datetime.min.replace(tzinfo=UTC),
+            group["source"],
+        ),
+        reverse=True,
+    )
+    return out
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Aggregate personal subscription updates")
     parser.add_argument("--output-dir", default="data", help="Directory for output JSON files")
@@ -619,6 +670,7 @@ def main() -> int:
         site_name="Momoyu RSS",
         feed_title="momoyu.cc",
         allow_missing_published=True,
+        subscription_url=MOMOYU_RSS_URL,
     )
     raw_items.extend(momoyu_items)
     statuses.append(momoyu_status)
@@ -638,6 +690,7 @@ def main() -> int:
                 "site_id": raw.site_id,
                 "site_name": raw.site_name,
                 "source": raw.source,
+                "subscription_url": raw.subscription_url,
                 "title": title,
                 "url": url,
                 "published_at": iso(raw.published_at),
@@ -653,6 +706,7 @@ def main() -> int:
             if raw.published_at:
                 existing["published_at"] = iso(raw.published_at)
             existing["last_seen_at"] = iso(now)
+            existing["subscription_url"] = raw.subscription_url or str(existing.get("subscription_url") or "")
 
     keep_after = now - timedelta(days=args.archive_days)
     pruned: dict[str, dict[str, Any]] = {}
@@ -682,7 +736,8 @@ def main() -> int:
 
     follow_items.sort(key=lambda x: event_time(x) or datetime.min.replace(tzinfo=UTC), reverse=True)
     momoyu_items_out.sort(key=lambda x: event_time(x) or datetime.min.replace(tzinfo=UTC), reverse=True)
-    follow_items = follow_items[:20]
+    follow_groups = group_follow_opml_items(follow_items, per_feed_limit=10)
+    follow_items = [item for group in follow_groups for item in group["items"]]
     momoyu_items_out = momoyu_items_out[:20]
 
     subscription_items = sorted(
@@ -706,9 +761,11 @@ def main() -> int:
         "items_ai": subscription_items,
         "items_all_raw": subscription_items,
         "items_all": subscription_items,
-        "follow_opml_limit": 20,
+        "follow_opml_per_feed_limit": 10,
+        "follow_opml_group_count": len(follow_groups),
         "follow_opml_count": len(follow_items),
         "follow_opml_items": follow_items,
+        "follow_opml_groups": follow_groups,
         "momoyu_limit": 20,
         "momoyu_count": len(momoyu_items_out),
         "momoyu_items": momoyu_items_out,
@@ -719,9 +776,10 @@ def main() -> int:
             "groups": site_stats,
             "sections": {
                 "follow_opml": {
-                    "limit": 20,
+                    "per_feed_limit": 10,
                     "count": len(follow_items),
                     "items": follow_items,
+                    "groups": follow_groups,
                 },
                 "momoyu": {
                     "limit": 20,
