@@ -1,8 +1,8 @@
-# AI Signal Board
+# Personal Feed Board
 
 中文 | [English](#english)
 
-高质量 AI/科技新闻聚合项目，支持静态网页展示、24h 增量更新、OPML RSS 批量接入、失败源替换与告警。
+个人订阅内容聚合项目，支持静态网页展示、定时更新、OPML RSS 批量接入、失败源替换与告警。
 
 说明：本仓库已适配公开发布，**不会包含作者私有 RSS 订阅文件**。
 
@@ -14,17 +14,17 @@
 你只要执行一个命令，或者直接用 GitHub Actions 定时运行即可。
 
 - 本地命令（一次）：
-  - `python scripts/update_news.py --output-dir data --window-hours 24 --rss-opml feeds/follow.opml`
+  - `python scripts/update_news.py --output-dir data --rss-opml feeds/follow.opml`
 - 自动化（推荐）：
   - `.github/workflows/update-news.yml` 已配置定时任务，默认每 30 分钟自动更新并提交数据。
 
 ### 2. 主要能力
 
-- 5 个网页源聚合（Info Flow / BestBlogs / TopHub / AI今日热榜 / NewsNow）
+- 自定义 RSS 订阅聚合（支持 `follow.opml` 与独立 RSS 分区）
 - OPML RSS 批量接入（私有文件 `feeds/follow.opml`，仓库提供模板 `feeds/follow.example.opml`）
-- 24h 双视图：`AI强相关` / `全量`
+- 双视图：`精选` / `全部`
 - 全量模式去重开关
-- AI 模式默认去重
+- 精选模式默认去重
 - 站点与分区聚合展示
 - 中英双语标题显示
 - RSS 失败源自动处理：
@@ -49,7 +49,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 cp feeds/follow.example.opml feeds/follow.opml
 # 把你自己的 OPML 内容替换到 feeds/follow.opml（不要提交到仓库）
-python scripts/update_news.py --output-dir data --window-hours 24 --rss-opml feeds/follow.opml
+python scripts/update_news.py --output-dir data --rss-opml feeds/follow.opml
 python -m http.server 8080
 ```
 
@@ -87,7 +87,7 @@ python -m http.server 8080
 
 ## English
 
-Production-grade AI/tech news aggregator with a static web UI, 24h updates, and OPML RSS ingestion.
+Personal subscription aggregator with a static web UI and OPML RSS ingestion.
 
 This repo is safe for public release and does **not** include the maintainer's private RSS subscription file.
 
@@ -97,16 +97,16 @@ No.
 You only need to run one command, or let GitHub Actions run it on schedule.
 
 - One-shot local command:
-  - `python scripts/update_news.py --output-dir data --window-hours 24 --rss-opml feeds/follow.opml`
+  - `python scripts/update_news.py --output-dir data --rss-opml feeds/follow.opml`
 - Scheduled automation:
   - `.github/workflows/update-news.yml` runs every 30 minutes and commits updated data.
 
 ### 2. Core features
 
-- Multi-source web aggregation
+- Personal RSS aggregation
 - OPML RSS ingestion (private `feeds/follow.opml`; template provided as `feeds/follow.example.opml`)
-- 24h two-mode UI (`AI-focused` / `All`)
-- Dedup toggle in All mode, dedup-by-default in AI mode
+- Two-mode UI (`Highlights` / `All`)
+- Dedup toggle in All mode, dedup-by-default in Highlights mode
 - Site + section grouping
 - Bilingual title rendering
 - RSS resilience:
@@ -130,7 +130,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 cp feeds/follow.example.opml feeds/follow.opml
 # Replace with your own OPML subscriptions (do not commit this file)
-python scripts/update_news.py --output-dir data --window-hours 24 --rss-opml feeds/follow.opml
+python scripts/update_news.py --output-dir data --rss-opml feeds/follow.opml
 python -m http.server 8080
 ```
 

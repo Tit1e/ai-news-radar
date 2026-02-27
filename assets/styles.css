@@ -138,6 +138,11 @@ select {
   font-size: 13px;
 }
 
+.updated-standalone {
+  margin-top: 10px;
+  display: block;
+}
+
 .mode-switch {
   display: inline-flex;
   border: 1px solid var(--line);
@@ -418,6 +423,64 @@ select {
   padding: 24px 18px;
   color: var(--muted);
   text-align: center;
+}
+
+.momoyu-meta {
+  padding: 12px 16px 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.momoyu-section {
+  border-top: 1px solid rgba(22, 16, 13, 0.08);
+}
+
+.momoyu-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(15, 111, 127, 0.05);
+  border-bottom: 1px solid rgba(22, 16, 13, 0.08);
+}
+
+.momoyu-section-head h3 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.momoyu-section-head span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.momoyu-section-list {
+  display: grid;
+}
+
+.momoyu-entry {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 8px;
+  align-items: start;
+  text-decoration: none;
+  color: var(--ink);
+  padding: 10px 16px;
+  border-top: 1px solid rgba(22, 16, 13, 0.06);
+}
+
+.momoyu-entry:first-child {
+  border-top: 0;
+}
+
+.momoyu-rank {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.momoyu-title {
+  line-height: 1.4;
+  font-size: 14px;
 }
 
 @media (max-width: 760px) {

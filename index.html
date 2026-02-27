@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Signal Board</title>
+    <title>Personal Feed Board</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,34 +19,17 @@
     <main class="shell">
       <header class="hero">
         <div class="hero-headline">
-          <img class="hero-logo" src="./assets/logo.svg" alt="AI Signal Board Logo" />
+          <img class="hero-logo" src="./assets/logo.svg" alt="Personal Feed Board Logo" />
           <div>
-            <p class="hero-tag">AI NEWS INTELLIGENCE</p>
-            <h1>24 小时 AI 更新雷达</h1>
+            <p class="hero-tag">PERSONAL SUBSCRIPTION STREAM</p>
+            <h1>我的订阅流</h1>
           </div>
         </div>
         <p class="hero-sub">
-          聚合 5 个站点内容，先全量采集，再筛选 AI/科技强相关话题。
+          聚合我的 RSS 订阅内容，支持分区浏览、搜索与筛选。
         </p>
       </header>
-
-      <section class="controls">
-        <input id="searchInput" type="search" placeholder="搜索标题 / 来源" />
-        <select id="siteSelect">
-          <option value="">全部站点</option>
-        </select>
-        <div class="mode-switch">
-          <button id="modeAiBtn" class="mode-btn active" type="button">AI强相关</button>
-          <button id="modeAllBtn" class="mode-btn" type="button">全量</button>
-        </div>
-        <label id="allDedupeWrap" class="all-dedupe" for="allDedupeToggle">
-          <input id="allDedupeToggle" type="checkbox" checked />
-          <span class="all-dedupe-dot"></span>
-          <span id="allDedupeLabel">去重开</span>
-        </label>
-        <span class="updated" id="updatedAt">加载中...</span>
-      </section>
-      <div class="mode-hint" id="modeHint">当前视图：AI强相关</div>
+      <div class="updated updated-standalone" id="updatedAt">加载中...</div>
 
       <section class="list-wrap follow-wrap">
         <div class="list-head">
@@ -56,14 +39,12 @@
         <div id="followOpmlList" class="news-list"></div>
       </section>
 
-      <section class="site-pills" id="sitePills"></section>
-
-      <section class="list-wrap">
+      <section class="list-wrap follow-wrap">
         <div class="list-head">
-          <h2>最近 24 小时更新</h2>
-          <span id="resultCount">0 条</span>
+          <h2>momoyu 热榜 RSS 最近 20 条</h2>
+          <span id="momoyuCount">0 条</span>
         </div>
-        <div id="newsList" class="news-list"></div>
+        <div id="momoyuList" class="news-list"></div>
       </section>
     </main>
 

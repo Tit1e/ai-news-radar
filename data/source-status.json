@@ -1,0 +1,113 @@
+{
+  "generated_at": "2026-02-27T06:41:49.592387Z",
+  "sites": [
+    {
+      "site_id": "opmlrss",
+      "site_name": "OPML RSS",
+      "ok": true,
+      "partial_failures": 0,
+      "item_count": 125,
+      "duration_ms": 6983,
+      "error": null,
+      "feed_count": 5,
+      "effective_feed_count": 5,
+      "ok_feed_count": 5,
+      "failed_feed_count": 0,
+      "skipped_feed_count": 0,
+      "replaced_feed_count": 0
+    },
+    {
+      "site_id": "momoyurss",
+      "site_name": "Momoyu RSS",
+      "ok": true,
+      "item_count": 1,
+      "duration_ms": 132,
+      "error": null,
+      "feed_url": "https://momoyu.cc/api/hot/rss?code=MSw0NywyLDYsOTIsOSwzOCwyOSw0NSw4LDMyLDM2LDExLDgzLDQz"
+    }
+  ],
+  "successful_sites": 2,
+  "failed_sites": [],
+  "zero_item_sites": [],
+  "fetched_raw_items": 126,
+  "items_before_filter": 22,
+  "items_in_window": 22,
+  "rss_opml": {
+    "enabled": true,
+    "path": "feeds/follow.opml",
+    "feed_total": 5,
+    "effective_feed_total": 5,
+    "ok_feeds": 5,
+    "failed_feeds": [],
+    "zero_item_feeds": [],
+    "skipped_feeds": [],
+    "replaced_feeds": [],
+    "feeds": [
+      {
+        "site_id": "opmlrss",
+        "site_name": "OPML RSS",
+        "ok": true,
+        "item_count": 10,
+        "duration_ms": 1208,
+        "error": null,
+        "feed_url": "https://evolly.one/atom.xml",
+        "feed_title": "Tit1e",
+        "effective_feed_url": "https://evolly.one/atom.xml",
+        "skipped": false,
+        "replaced": false
+      },
+      {
+        "site_id": "opmlrss",
+        "site_name": "OPML RSS",
+        "ok": true,
+        "item_count": 63,
+        "duration_ms": 1404,
+        "error": null,
+        "feed_url": "https://kinnoukabokudo.com/rss",
+        "feed_title": "木土金王可",
+        "effective_feed_url": "https://kinnoukabokudo.com/rss",
+        "skipped": false,
+        "replaced": false
+      },
+      {
+        "site_id": "opmlrss",
+        "site_name": "OPML RSS",
+        "ok": true,
+        "item_count": 10,
+        "duration_ms": 894,
+        "error": null,
+        "feed_url": "https://blog.douchi.space/index.xml",
+        "feed_title": "椒盐豆豉",
+        "effective_feed_url": "https://blog.douchi.space/index.xml",
+        "skipped": false,
+        "replaced": false
+      },
+      {
+        "site_id": "opmlrss",
+        "site_name": "OPML RSS",
+        "ok": true,
+        "item_count": 12,
+        "duration_ms": 2283,
+        "error": null,
+        "feed_url": "https://weekly.tw93.fun/rss.xml",
+        "feed_title": "潮流周刊",
+        "effective_feed_url": "https://weekly.tw93.fun/rss.xml",
+        "skipped": false,
+        "replaced": false
+      },
+      {
+        "site_id": "opmlrss",
+        "site_name": "OPML RSS",
+        "ok": true,
+        "item_count": 30,
+        "duration_ms": 1194,
+        "error": null,
+        "feed_url": "https://darmau.co/zh/article/rss.xml",
+        "feed_title": "积薪 - 文章",
+        "effective_feed_url": "https://darmau.co/zh/article/rss.xml",
+        "skipped": false,
+        "replaced": false
+      }
+    ]
+  }
+}
