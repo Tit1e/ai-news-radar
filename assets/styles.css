@@ -250,7 +250,7 @@ select {
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.76);
   backdrop-filter: blur(3px);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .list-head {
@@ -448,15 +448,21 @@ select {
 
 .momoyu-section {
   border-top: 1px solid rgba(22, 16, 13, 0.08);
+  position: relative;
 }
 
 .momoyu-section-head {
+  position: sticky;
+  top: 10px;
+  z-index: 4;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
-  background: rgba(15, 111, 127, 0.05);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(243, 250, 251, 0.92));
+  backdrop-filter: blur(6px);
   border-bottom: 1px solid rgba(22, 16, 13, 0.08);
+  box-shadow: 0 3px 10px rgba(18, 16, 15, 0.06);
 }
 
 .momoyu-section-head h3 {
@@ -532,6 +538,10 @@ select {
 
   .time {
     margin-left: 0;
+  }
+
+  .momoyu-section-head {
+    top: 6px;
   }
 
 }
