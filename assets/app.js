@@ -31,8 +31,10 @@ function fmtTime(iso) {
 
 function renderItemNode(item) {
   const node = itemTpl.content.firstElementChild.cloneNode(true);
-  node.querySelector(".site").textContent = item.site_name || "订阅";
-  node.querySelector(".source").textContent = `来源: ${item.source || "未分区"}`;
+  const siteEl = node.querySelector(".site");
+  const sourceEl = node.querySelector(".source");
+  if (siteEl) siteEl.remove();
+  if (sourceEl) sourceEl.remove();
   node.querySelector(".time").textContent = fmtTime(item.published_at || item.first_seen_at);
 
   const titleEl = node.querySelector(".title");
