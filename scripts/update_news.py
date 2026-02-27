@@ -1170,11 +1170,9 @@ def fetch_newsnow(session: requests.Session, now: datetime) -> list[RawItem]:
 
 def collect_all(session: requests.Session, now: datetime) -> tuple[list[RawItem], list[dict[str, Any]]]:
     tasks = [
-        ("techurls", "TechURLs", fetch_techurls),
         ("iris", "Info Flow", fetch_iris),
         ("bestblogs", "BestBlogs", fetch_bestblogs),
         ("tophub", "TopHub", fetch_tophub),
-        ("aibase", "AIbase", fetch_aibase),
         ("aihot", "AI今日热榜", fetch_aihot),
         ("newsnow", "NewsNow", fetch_newsnow),
     ]
