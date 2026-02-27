@@ -16,7 +16,7 @@
     <div class="bg-orb orb-a"></div>
     <div class="bg-orb orb-b"></div>
 
-    <main class="shell">
+    <main class="shell" id="app">
       <header class="hero">
         <div class="hero-headline">
           <img class="hero-logo" src="./assets/logo.svg" alt="Personal Feed Board Logo" />
@@ -29,36 +29,99 @@
           聚合我的 RSS 订阅内容，支持分区浏览、搜索与筛选。
         </p>
       </header>
-      <div class="updated updated-standalone" id="updatedAt">加载中...</div>
+      <div class="updated updated-standalone">{{ updatedLabel }}</div>
 
       <section class="list-wrap follow-wrap">
         <div class="list-head">
           <h2>热榜</h2>
-          <span id="momoyuCount">0 条</span>
+          <span>{{ momoyuCountText }}</span>
         </div>
-        <div id="momoyuList" class="news-list"></div>
+        <div class="news-list">
+          <template v-if="hasMomoyuSections">
+            <section class="momoyu-section" v-for="(sec, secIndex) in momoyuSections" :key="`${sec.section || 'sec'}-${secIndex}`">
+              <header class="momoyu-section-head">
+                <h3>{{ sec.section || "未命名榜单" }}</h3>
+              </header>
+              <div class="momoyu-section-list">
+                <a
+                  class="momoyu-entry"
+                  v-for="entry in sec.entries || []"
+                  :key="`${sec.section || 'section'}-${entry.rank || 'r'}-${entry.title || 't'}`"
+                  :href="entry.url || '#'"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span class="momoyu-rank">{{ entry.rank ?? "-" }}</span>
+                  <span class="momoyu-title">{{ entry.title || "无标题" }}</span>
+                </a>
+              </div>
+            </section>
+          </template>
+          <template v-else-if="momoyuItems.length">
+            <article class="news-card" v-for="item in momoyuItems" :key="item.id || item.url">
+              <div class="meta-row">
+                <time class="time">{{ fmtTime(item.published_at || item.first_seen_at) }}</time>
+              </div>
+              <a class="title" :href="item.url || '#'" target="_blank" rel="noopener noreferrer">
+                <template v-if="hasBilingualTitle(item)">
+                  <span>{{ item.title_zh }}</span>
+                  <span class="title-sub">{{ item.title_en }}</span>
+                </template>
+                <template v-else>{{ pickTitle(item) }}</template>
+              </a>
+            </article>
+          </template>
+          <div v-else class="empty">{{ momoyuEmptyText }}</div>
+        </div>
       </section>
 
       <section class="list-wrap follow-wrap">
         <div class="list-head">
           <h2>RSS 订阅</h2>
-          <span id="followOpmlCount">0 条</span>
+          <span>{{ followCountText }}</span>
         </div>
-        <div id="followOpmlList" class="news-list"></div>
+        <div class="news-list">
+          <template v-if="followGroups.length">
+            <section class="momoyu-section" v-for="group in followGroups" :key="group.subscription_url || group.source">
+              <header class="momoyu-section-head">
+                <h3>{{ group.source || "未命名订阅" }}</h3>
+              </header>
+              <div class="momoyu-section-list">
+                <article class="news-card" v-for="item in group.items || []" :key="item.id || item.url">
+                  <div class="meta-row">
+                    <time class="time">{{ fmtTime(item.published_at || item.first_seen_at) }}</time>
+                  </div>
+                  <a class="title" :href="item.url || '#'" target="_blank" rel="noopener noreferrer">
+                    <template v-if="hasBilingualTitle(item)">
+                      <span>{{ item.title_zh }}</span>
+                      <span class="title-sub">{{ item.title_en }}</span>
+                    </template>
+                    <template v-else>{{ pickTitle(item) }}</template>
+                  </a>
+                </article>
+              </div>
+            </section>
+          </template>
+          <template v-else-if="followItems.length">
+            <article class="news-card" v-for="item in followItems" :key="item.id || item.url">
+              <div class="meta-row">
+                <time class="time">{{ fmtTime(item.published_at || item.first_seen_at) }}</time>
+              </div>
+              <a class="title" :href="item.url || '#'" target="_blank" rel="noopener noreferrer">
+                <template v-if="hasBilingualTitle(item)">
+                  <span>{{ item.title_zh }}</span>
+                  <span class="title-sub">{{ item.title_en }}</span>
+                </template>
+                <template v-else>{{ pickTitle(item) }}</template>
+              </a>
+            </article>
+          </template>
+          <div v-else class="empty">{{ followEmptyText }}</div>
+        </div>
       </section>
     </main>
 
-    <template id="itemTpl">
-      <article class="news-card">
-        <div class="meta-row">
-          <span class="site"></span>
-          <span class="source"></span>
-          <time class="time"></time>
-        </div>
-        <a class="title" target="_blank" rel="noopener noreferrer"></a>
-      </article>
-    </template>
-
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js" defer></script>
     <script src="./assets/app.js" defer></script>
   </body>
 </html>
