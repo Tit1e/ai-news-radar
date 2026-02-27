@@ -97,10 +97,18 @@ createApp({
       if (!iso) return "日期未知";
       const d = new Date(iso);
       if (Number.isNaN(d.getTime())) return "日期未知";
-      return new Intl.DateTimeFormat("zh-CN", {
-        month: "2-digit",
-        day: "2-digit",
-      }).format(d);
+      const now = new Date();
+      const sameYear = d.getFullYear() === now.getFullYear();
+      return new Intl.DateTimeFormat("zh-CN", sameYear
+        ? {
+            month: "2-digit",
+            day: "2-digit",
+          }
+        : {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          }).format(d);
     },
     pickTitle(item) {
       return item.title || item.title_zh || item.title_en || "无标题";
