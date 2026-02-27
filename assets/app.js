@@ -7,6 +7,8 @@ createApp({
       followGroups: [],
       momoyuItems: [],
       momoyuParsed: null,
+      selectedFollowGroupKey: "",
+      selectedMomoyuGroupKey: "",
       generatedAt: null,
       loadError: "",
     };
@@ -20,6 +22,34 @@ createApp({
     },
     hasMomoyuSections() {
       return this.momoyuSections.length > 0;
+    },
+    momoyuSplitGroups() {
+      return this.momoyuSections.map((sec, index) => ({
+        key: `momoyu-${index}`,
+        name: sec.section || "未命名榜单",
+        entries: Array.isArray(sec.entries) ? sec.entries : [],
+      }));
+    },
+    activeMomoyuGroup() {
+      if (!this.momoyuSplitGroups.length) return null;
+      return (
+        this.momoyuSplitGroups.find((group) => group.key === this.selectedMomoyuGroupKey) ||
+        this.momoyuSplitGroups[0]
+      );
+    },
+    followSplitGroups() {
+      return (this.followGroups || []).map((group, index) => ({
+        key: `${String(group.subscription_url || group.source || "follow")}::${index}`,
+        name: group.source || "未命名订阅",
+        items: Array.isArray(group.items) ? group.items : [],
+      }));
+    },
+    activeFollowGroup() {
+      if (!this.followSplitGroups.length) return null;
+      return (
+        this.followSplitGroups.find((group) => group.key === this.selectedFollowGroupKey) ||
+        this.followSplitGroups[0]
+      );
     },
     followCountText() {
       if (this.followGroups.length > 0) {
@@ -63,6 +93,15 @@ createApp({
         minute: "2-digit",
       }).format(d);
     },
+    fmtDate(iso) {
+      if (!iso) return "日期未知";
+      const d = new Date(iso);
+      if (Number.isNaN(d.getTime())) return "日期未知";
+      return new Intl.DateTimeFormat("zh-CN", {
+        month: "2-digit",
+        day: "2-digit",
+      }).format(d);
+    },
     pickTitle(item) {
       return item.title || item.title_zh || item.title_en || "无标题";
     },
@@ -70,6 +109,21 @@ createApp({
       const zh = (item.title_zh || "").trim();
       const en = (item.title_en || "").trim();
       return Boolean(zh && en && zh !== en);
+    },
+    syncSelectedGroups() {
+      if (this.momoyuSplitGroups.length) {
+        const exists = this.momoyuSplitGroups.some((group) => group.key === this.selectedMomoyuGroupKey);
+        if (!exists) this.selectedMomoyuGroupKey = this.momoyuSplitGroups[0].key;
+      } else {
+        this.selectedMomoyuGroupKey = "";
+      }
+
+      if (this.followSplitGroups.length) {
+        const exists = this.followSplitGroups.some((group) => group.key === this.selectedFollowGroupKey);
+        if (!exists) this.selectedFollowGroupKey = this.followSplitGroups[0].key;
+      } else {
+        this.selectedFollowGroupKey = "";
+      }
     },
     async loadNewsData() {
       const res = await fetch(`./data/latest-24h.json?t=${Date.now()}`);
@@ -85,6 +139,7 @@ createApp({
       this.momoyuItems = payload.momoyu_items || [];
       this.momoyuParsed = payload.momoyu_parsed || null;
       this.generatedAt = payload.generated_at || null;
+      this.syncSelectedGroups();
       this.loadError = "";
     } catch (err) {
       this.loadError = err && err.message ? err.message : "数据加载失败";
@@ -92,6 +147,8 @@ createApp({
       this.followGroups = [];
       this.momoyuItems = [];
       this.momoyuParsed = null;
+      this.selectedFollowGroupKey = "";
+      this.selectedMomoyuGroupKey = "";
       this.generatedAt = null;
     }
   },

@@ -19,7 +19,6 @@
     <main class="shell" id="app">
       <header class="hero">
         <div class="hero-headline">
-          <img class="hero-logo" src="./assets/logo.svg" alt="Personal Feed Board Logo" />
           <div>
             <p class="hero-tag">PERSONAL SUBSCRIPTION STREAM</p>
             <h1>我的订阅流</h1>
@@ -34,28 +33,41 @@
       <section class="list-wrap follow-wrap">
         <div class="list-head">
           <h2>热榜</h2>
-          <span>{{ momoyuCountText }}</span>
         </div>
         <div class="news-list">
           <template v-if="hasMomoyuSections">
-            <section class="momoyu-section" v-for="(sec, secIndex) in momoyuSections" :key="`${sec.section || 'sec'}-${secIndex}`">
-              <header class="momoyu-section-head">
-                <h3>{{ sec.section || "未命名榜单" }}</h3>
-              </header>
-              <div class="momoyu-section-list">
-                <a
-                  class="momoyu-entry"
-                  v-for="entry in sec.entries || []"
-                  :key="`${sec.section || 'section'}-${entry.rank || 'r'}-${entry.title || 't'}`"
-                  :href="entry.url || '#'"
-                  target="_blank"
-                  rel="noopener noreferrer"
+            <div class="split-view">
+              <aside class="group-nav" aria-label="热榜分组">
+                <button
+                  v-for="group in momoyuSplitGroups"
+                  :key="group.key"
+                  class="group-nav-item"
+                  :class="{ active: group.key === selectedMomoyuGroupKey }"
+                  type="button"
+                  @click="selectedMomoyuGroupKey = group.key"
                 >
-                  <span class="momoyu-rank">{{ entry.rank ?? "-" }}</span>
-                  <span class="momoyu-title">{{ entry.title || "无标题" }}</span>
-                </a>
-              </div>
-            </section>
+                  {{ group.name }}
+                </button>
+              </aside>
+              <section class="group-detail" v-if="activeMomoyuGroup">
+                <header class="momoyu-section-head">
+                  <h3>{{ activeMomoyuGroup.name }}</h3>
+                </header>
+                <div class="momoyu-section-list">
+                  <a
+                    class="momoyu-entry"
+                    v-for="entry in activeMomoyuGroup.entries"
+                    :key="`${activeMomoyuGroup.key}-${entry.rank || 'r'}-${entry.title || 't'}`"
+                    :href="entry.url || '#'"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span class="momoyu-rank">{{ entry.rank ?? "-" }}</span>
+                    <span class="momoyu-title">{{ entry.title || "无标题" }}</span>
+                  </a>
+                </div>
+              </section>
+            </div>
           </template>
           <template v-else-if="momoyuItems.length">
             <article class="news-card" v-for="item in momoyuItems" :key="item.id || item.url">
@@ -78,42 +90,55 @@
       <section class="list-wrap follow-wrap">
         <div class="list-head">
           <h2>RSS 订阅</h2>
-          <span>{{ followCountText }}</span>
         </div>
         <div class="news-list">
-          <template v-if="followGroups.length">
-            <section class="momoyu-section" v-for="group in followGroups" :key="group.subscription_url || group.source">
-              <header class="momoyu-section-head">
-                <h3>{{ group.source || "未命名订阅" }}</h3>
-              </header>
-              <div class="momoyu-section-list">
-                <article class="news-card" v-for="item in group.items || []" :key="item.id || item.url">
-                  <div class="meta-row">
-                    <time class="time">{{ fmtTime(item.published_at || item.first_seen_at) }}</time>
-                  </div>
-                  <a class="title" :href="item.url || '#'" target="_blank" rel="noopener noreferrer">
-                    <template v-if="hasBilingualTitle(item)">
-                      <span>{{ item.title_zh }}</span>
-                      <span class="title-sub">{{ item.title_en }}</span>
-                    </template>
-                    <template v-else>{{ pickTitle(item) }}</template>
-                  </a>
-                </article>
-              </div>
-            </section>
+          <template v-if="followSplitGroups.length">
+            <div class="split-view">
+              <aside class="group-nav" aria-label="RSS 订阅分组">
+                <button
+                  v-for="group in followSplitGroups"
+                  :key="group.key"
+                  class="group-nav-item"
+                  :class="{ active: group.key === selectedFollowGroupKey }"
+                  type="button"
+                  @click="selectedFollowGroupKey = group.key"
+                >
+                  {{ group.name }}
+                </button>
+              </aside>
+              <section class="group-detail" v-if="activeFollowGroup">
+                <header class="momoyu-section-head">
+                  <h3>{{ activeFollowGroup.name }}</h3>
+                </header>
+                <div class="momoyu-section-list">
+                  <article class="news-card" v-for="item in activeFollowGroup.items" :key="item.id || item.url">
+                    <div class="rss-inline-row">
+                      <a class="title" :href="item.url || '#'" target="_blank" rel="noopener noreferrer">
+                        <template v-if="hasBilingualTitle(item)">
+                          <span>{{ item.title_zh }}</span>
+                          <span class="title-sub">{{ item.title_en }}</span>
+                        </template>
+                        <template v-else>{{ pickTitle(item) }}</template>
+                      </a>
+                      <time class="time">{{ fmtDate(item.published_at || item.first_seen_at) }}</time>
+                    </div>
+                  </article>
+                </div>
+              </section>
+            </div>
           </template>
           <template v-else-if="followItems.length">
             <article class="news-card" v-for="item in followItems" :key="item.id || item.url">
-              <div class="meta-row">
-                <time class="time">{{ fmtTime(item.published_at || item.first_seen_at) }}</time>
+              <div class="rss-inline-row">
+                <a class="title" :href="item.url || '#'" target="_blank" rel="noopener noreferrer">
+                  <template v-if="hasBilingualTitle(item)">
+                    <span>{{ item.title_zh }}</span>
+                    <span class="title-sub">{{ item.title_en }}</span>
+                  </template>
+                  <template v-else>{{ pickTitle(item) }}</template>
+                </a>
+                <time class="time">{{ fmtDate(item.published_at || item.first_seen_at) }}</time>
               </div>
-              <a class="title" :href="item.url || '#'" target="_blank" rel="noopener noreferrer">
-                <template v-if="hasBilingualTitle(item)">
-                  <span>{{ item.title_zh }}</span>
-                  <span class="title-sub">{{ item.title_en }}</span>
-                </template>
-                <template v-else>{{ pickTitle(item) }}</template>
-              </a>
             </article>
           </template>
           <div v-else class="empty">{{ followEmptyText }}</div>
